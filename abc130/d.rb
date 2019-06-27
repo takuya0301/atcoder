@@ -2,19 +2,23 @@ def main
   n, k = gets.split.map(&:to_i)
   as = gets.split.map(&:to_i)
 
-  count = 0
-  (0...n).each do |i|
-    index = (i...n).bsearch do |j|
-      total = 0
-      (i..j).each do |x|
-        total += as[x]
-      end
-      k <= total
+  answer = 0
+
+  r = 0
+  sum = 0
+  n.times do |i|
+    while sum < k && r < n do
+      sum += as[r]
+
+      r += 1
     end
-    count += n - index if index
+
+    answer += n - r + 1 if k <= sum
+
+    sum -= as[i]
   end
 
-  puts count
+  puts answer
 end
 
 main if $0 == __FILE__
